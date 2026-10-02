@@ -1,4 +1,4 @@
--- Development schema reconstructed from the thesis source and mapper SQL.
+-- Development schema reconstructed from the original project source and mapper SQL.
 -- This project stores demo passwords in plain text. Do not use it in production.
 
 CREATE DATABASE IF NOT EXISTS pest
