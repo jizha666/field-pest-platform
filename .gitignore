@@ -1,0 +1,22 @@
+.cache/
+.pip-cache/
+.npm-cache/
+node_modules/
+dist/
+target/
+*.log
+.env
+.env.*
+!.env.example
+captures/
+uploads/
+*.pt
+*.onnx
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local Spring overrides
+application-local.yml
+.run/

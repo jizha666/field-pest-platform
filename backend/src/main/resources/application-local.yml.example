@@ -1,0 +1,5 @@
+# Copy this file to application-local.yml for local development.
+# The real local file is ignored by Git and must never be committed.
+spring:
+  datasource:
+    password: ${DB_PASSWORD:your-local-mysql-password}

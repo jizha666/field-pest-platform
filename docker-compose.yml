@@ -1,0 +1,44 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: demo-root-password
+      MYSQL_DATABASE: pest
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdemo-root-password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docs/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "3306:3306"
+
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:mysql://db:3306/pest?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      DB_USERNAME: root
+      DB_PASSWORD: demo-root-password
+      JWT_SECRET: local-demo-secret-change-before-use
+      CAMERA_CAPTURE_DIR: /app/captures
+      YOLO_INFERENCE_URL: http://host.docker.internal:5000/upload
+      QWEATHER_API_HOST: ""
+      QWEATHER_API_KEY: ""
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  mysql_data:

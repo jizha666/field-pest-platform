@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaji.mapper.FieldMapper">
+    <select id="list_1" resultType="com.zhaji.pojo.Field">
+        select field.name, environment_record.category, environment_record.value, environment_record.create_time date from environment_record, field
+        <where>
+            environment_record.field_id = field.id
+            <if test="name != null and name != ''">
+                and field.name like concat('%', #{name}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                and environment_record.category like concat('%', #{category}, '%')
+            </if>
+            <if test="begin != null and end != null">
+                and environment_record.create_time between #{begin} and #{end}
+            </if>
+        </where>
+        order by date desc
+    </select>
+    <select id="list_a" resultType="com.zhaji.pojo.Field">
+        select field.id id, name, province, city from area, field
+        <where>
+            field.area_id = area.id
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="province != null and province != ''">
+                and province like concat('%', #{province}, '%')
+            </if>
+            <if test="city != null and city != ''">
+                and city like concat('%', #{city}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

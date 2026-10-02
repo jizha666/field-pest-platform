@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaji.mapper.EquipMapper">
+    <select id="list" resultType="com.zhaji.pojo.Equip">
+        select equipment.id, equipment.name, field.name landName, category, status
+        from field, equipment
+        <where>
+            equipment.field_id = field.id
+            <if test="name != null and name != ''">
+                and equipment.name like concat('%', #{name}, '%')
+            </if>
+            <if test="landName != null and landName != ''">
+                and field.name like concat('%', #{landName}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                and category like concat('%', #{category}, '%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>

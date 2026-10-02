@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhaji.mapper.AreaMapper">
+    <select id="list_v" resultType="com.zhaji.pojo.Area">
+        select area.id id, name, province, city from area, field
+        <where>
+            area.id = field.area_id
+            <if test="province != null and province != ''">
+                and province like concat('%', #{province}, '%')
+            </if>
+            <if test="city != null and city != ''">
+                and city like concat('%', #{city}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="list_a" resultType="com.zhaji.pojo.Area">
+        select area.id id, province, city, count(name) number
+        from area
+                 left join field on area.id = field.area_id
+        <where>
+            <if test="province != null and province != ''">
+                and province like concat('%', #{province}, '%')
+            </if>
+            <if test="city != null and city != ''">
+                and city like concat('%', #{city}, '%')
+            </if>
+        </where>
+        group by area.id
+    </select>
+</mapper>
