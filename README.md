@@ -4,7 +4,7 @@
 
 ## 发布状态
 
-- 仓库只包含本人编写的 Web 系统代码、公开配置和脱敏文档。
+- 仓库只包含本人编写的 Web 系统与推理服务代码、公开配置和脱敏文档。
 - Docker Compose 配置已提供，但尚未在作者本机完成端到端实机验证。
 - YOLO 模型、海康 Web SDK 和真实设备凭据均不进入仓库。
 
@@ -13,14 +13,14 @@
 - 独立完成 Vue 3 前端和 Spring Boot 后端的业务开发、联调与测试。
 - 项目时间：2025.03-2025.06。
 - YOLO 模型来自上一届学生毕设，只提供 `best v8s.pt`；我不负责模型结构、训练或指标优化。
-- 我负责摄像头截图流程、调用 YOLO 推理 HTTP 服务、解析结果、存储记录和前端展示。
+- 我独立编写 Flask + Ultralytics YOLO 推理接口，并负责摄像头截图、HTTP 调用、结果解析、存储记录和前端展示。
 
 ## 技术栈
 
 - 前端：Vue 3、Vite、Element Plus、Axios、ECharts、Vue Router
 - 后端：Java 21、Spring Boot 3.4、MyBatis、Maven、JWT、Spring Scheduling
 - 数据：MySQL 8、PageHelper
-- 外部服务：和风天气 API、海康 WebVideoCtrl SDK、既有 YOLO HTTP 推理服务
+- 外部服务：和风天气 API、海康 WebVideoCtrl SDK、自建 YOLO HTTP 推理服务
 
 ## 功能模块
 
@@ -35,6 +35,7 @@
 
 - `backend/`：Spring Boot 服务
 - `frontend/`：Vue 3 管理后台和访客页面
+- `yolo-service/`：本人编写的 Flask + Ultralytics YOLO 推理接口，模型权重不随仓库分发
 - `docs/schema.sql`：根据实体和 MyBatis SQL 重建的开发库结构
 - `docs/api.md`：主要接口清单
 - `docs/interview-notes.md`：设计取舍、不足和重构方向
@@ -86,7 +87,7 @@ docker compose up --build
 
 - 海康摄像机由老师提供，目前无法复现实机演示。
 - 公开演示使用脱敏截图和代码走查，不伪装成实时设备画面。
-- 论文中合成的水稻田图片必须标注为“演示示意”。
+- 论文截图中的稻田场景为合成演示示意，不是摄像头实时采集画面。
 
 ## 海康 SDK 说明
 
@@ -108,7 +109,7 @@ docker compose up --build
 
 ## 许可证与第三方边界
 
-本人编写的代码使用 [MIT License](LICENSE)。`best v8s.pt`、上一届学生的 YOLO 推理代码、海康 Web SDK 及其他第三方组件不包含在本仓库中，也不由本项目的 MIT License 覆盖。详细说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+本人编写的代码，包括 `yolo-service/app.py`，使用 [MIT License](LICENSE)。上一届学生的 `best v8s.pt`、海康 Web SDK 及其他第三方组件不包含在本仓库中，也不由本项目的 MIT License 覆盖。详细说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
 
 
 
